@@ -10,8 +10,12 @@ class CreateTeamsTable extends Migration
     {
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            // Add any other columns you need
+            $table->string('Name');
+            $table->string('Coach');
+            $table->integer('Points');
+            $table->string('Games');
+            $table->integer('Victories');
+            $table->string('Defeats');  
             $table->timestamps();
         });
     }

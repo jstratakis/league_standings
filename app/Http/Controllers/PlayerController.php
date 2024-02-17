@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\GeneralHelpers;
+use Illuminate\Support\Facades\View;
 use App\Models\Player;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -22,7 +24,8 @@ class PlayerController extends Controller
      */
     public function create()
     {
-        return view('players.create');
+        $countries = GeneralHelpers::getCountries();
+        return view('players.create', compact('countries'));
     }
 
     /**
@@ -30,15 +33,19 @@ class PlayerController extends Controller
      */
     public function store(Request $request)
     {   
+        $messages = [
+            'Jersey_Number.unique' => 'The jersey number is already in use by another player.',
+        ];
+
         $data = $request->validate([
             'Name' => 'required',
             'Team' => 'required',
-            'Jersey_Number' => 'required|numeric',
+            'Jersey_Number' => 'required|numeric|min:0|max:99|unique:players,Jersey_Number',
             'Position' => 'required',
-            'Date_of_birth' => 'required',
+            'Date_of_birth' => 'required|date',
             'Nationality' => 'required',
         ]);
-
+    
         $player = new Player;
         $player->Name = $request->Name;
         $player->Team = $request->Team;
@@ -47,8 +54,7 @@ class PlayerController extends Controller
         $player->Date_of_birth = $request->Date_of_birth;
         $player->Nationality = $request->Nationality;
         $player->save();
-
-
+    
         return redirect(route('player.index'));
 
         // Code to store the player in the database
@@ -79,15 +85,15 @@ class PlayerController extends Controller
         $data = $request->validate([
             'Name' => 'required',
             'Team' => 'required',
-            'Jersey_Number' => 'required|numeric',
+            'Jersey_Number' => 'required|numeric|min:0|max:99|unique:players,Jersey_Number,' . $player->id,
             'Position' => 'required',
-            'Date_of_birth' => 'required',
+            'Date_of_birth' => 'required|date',
             'Nationality' => 'required',
         ]);
-
+    
         $player->update($data);
-
-        return redirect(route('player.index'))->with('Success!', 'Player Updated Succesfully');
+    
+        return redirect(route('player.index'))->with('Success!', 'Player Updated Successfully');
     }
  
     /**
@@ -100,4 +106,12 @@ class PlayerController extends Controller
         return redirect(route('player.index'))->with('Success!', 'Player Updated Succesfully');
 
     }
+
+    public function createPlayerForm() {
+        
+    }
 }
+
+
+
+

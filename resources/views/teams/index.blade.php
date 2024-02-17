@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Players List</title>
+    <title>Teams List</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
@@ -27,10 +27,10 @@
 <body class="bg-gray-100 text-gray-900">
     <div class="container mx-auto mt-10 mb-10">
         <div class="flex justify-between items-center mb-6">
-            <a href="/player/create" class="bg-gray-500 bg-opacity-50 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
-            Create Player
+            <a href="/team/create" class="bg-gray-500 bg-opacity-50 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+            Create Team
             </a>
-            <h1 class="text-2xl font-bold text-gray-800">LEAGUE ROSTER</h1>
+            <h1 class="text-2xl font-bold text-gray-800">LEAGUES' TEAMS</h1>
             <div class="dropdown relative">
                 @auth
                 <button class="bg-green-500 bg-opacity-50 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
@@ -41,7 +41,7 @@
                     <form method="POST" action="/logout" class="block">
                         @csrf
                         <button type="submit" class="text-red-600 hover:text-red-800 transition duration-300 ease-in-out">
-                            Sign Out
+                            Sign Out    
                         </button>
                     </form>
                 </div>
@@ -57,29 +57,29 @@
                 <thead>
                     <tr class="bg-gray-800 text-white uppercase text-sm leading-normal">
                         <th class="py-3 px-5 text-left">Name</th>
-                        <th class="py-3 px-5 text-left">Team</th>
-                        <th class="py-3 px-5 text-left">Jersey Number</th>
-                        <th class="py-3 px-5 text-left">Position</th>
-                        <th class="py-3 px-5 text-left">Date of Birth</th>
-                        <th class="py-3 px-5 text-left">Nationality</th>
+                        <th class="py-3 px-5 text-left">Coach</th>
+                        <th class="py-3 px-5 text-left">Points</th>
+                        <th class="py-3 px-5 text-left">Games</th>
+                        <th class="py-3 px-5 text-left">Victories</th>
+                        <th class="py-3 px-5 text-left">Defeats</th>                        
                         <th class="py-3 px-5 text-left">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-700 text-sm">
-                    {{-- Assuming $players is provided by your controller --}}
-                    @foreach($players as $player)
+                    {{-- Assuming $teams is provided by your controller --}}
+                    @foreach($teams as $team)
                     <tr class="hover:bg-gray-100 border-b border-gray-200">
-                        <td class="py-3 px-5">{{ $player->Name }}</td>
-                        <td class="py-3 px-5">{{ $player->Team }}</td>
-                        <td class="py-3 px-5">{{ $player->Jersey_Number }}</td>
-                        <td class="py-3 px-5">{{ $player->Position }}</td>
-                        <td class="py-3 px-5">{{ $player->Date_of_birth }}</td>
-                        <td class="py-3 px-5">{{ $player->Nationality }}</td>
+                        <td class="py-3 px-5">{{ $team->Name }}</td>
+                        <td class="py-3 px-5">{{ $team->Coach }}</td>
+                        <td class="py-3 px-5">{{ $team->Points }}</td>
+                        <td class="py-3 px-5">{{ $team->Games }}</td>
+                        <td class="py-3 px-5">{{ $team->Victories }}</td>
+                        <td class="py-3 px-5">{{ $team->Defeats }}</td>
                         <td class="py-3 px-5 flex items-center">
-                            <a href="/player/edit/{{ $player->id }}" class="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out underline mr-2">
+                            <a href="/team/edit/{{ $team->id }}" class="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out underline mr-2">
                                 <i class="fas fa-pen-square mr-1"></i>Edit
                             </a>
-                            <form method="POST" action="/player/destroy/{{ $player->id }}" class="inline">
+                            <form method="POST" action="/team/destroy/{{ $team->id }}" class="inline">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="text-red-600 hover:text-red-800 transition duration-300 ease-in-out underline">

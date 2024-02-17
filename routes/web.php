@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,12 +20,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/player', [PlayerController::class, 'index'])->name('player.index');
-Route::get('/player/create', [PlayerController::class, 'create'])->name('player.create');
-Route::post('/player/store', [PlayerController::class, 'store'])->name('player_store');
-Route::get('/player/edit/{player}', [PlayerController::class, 'edit'])->name('player_edit');
-Route::put('/player/update/{player}', [PlayerController::class, 'update'])->name('player_update');
-Route::delete('/player/destroy/{player}', [PlayerController::class, 'destroy'])->name('player_destroy');
+
+
+
+
+//Routes for teams
+
+Route::get('/team', [TeamController::class, 'index'])->name('team.index');
+Route::get('/team/create', [TeamController::class, 'create'])->name('team.create');
+Route::post('/team/store', [TeamController::class, 'store'])->name('team.store');
+Route::get('/team/edit/{team}', [TeamController::class, 'edit'])->name('team.edit');
+Route::put('/team/update/{team}', [TeamController::class, 'update'])->name('team.update');
+Route::delete('/team/destroy/{team}', [TeamController::class, 'destroy'])->name('team.destroy');
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
